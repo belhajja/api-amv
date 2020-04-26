@@ -17,3 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::resource('societe', 'SocieteController');
+Route::resource('adherent', 'AdherentController');
+Route::resource('dossier', 'DossierController');
+Route::resource('demande', 'DemandeController');
+Route::resource('beneficiaire', 'BeneficiaireController');
+Route::resource('contact', 'ContactController');
+Route::resource('trackingdemande', 'TrackingDemandeController');
