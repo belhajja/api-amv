@@ -30,12 +30,12 @@ class DemandeController extends Controller
             'date_reponse' => 'required',
             'date_resolution' => 'required',
             'reponse' => 'required',
-            'societe_id' => 'required',
-            'adherent_id' => 'required',
-            'dossier_id' => 'required',
+            'societe_id' => 'nullable',
+            'adherent_id' => 'nullable',
+            'dossier_id' => 'nullable',
         ]);
 
-        $demande = Contact::create($request->all());
+        $demande = Demande::create($request->all());
 
         return response()->json([
             'message' => 'succès ! Nouvelle Demande crée',

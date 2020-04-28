@@ -14,14 +14,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+
+    'prefix' => 'auth'
+
+], function () {
+
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+
 });
 
-Route::resource('societe', 'SocieteController');
-Route::resource('adherent', 'AdherentController');
-Route::resource('dossier', 'DossierController');
-Route::resource('demande', 'DemandeController');
-Route::resource('beneficiaire', 'BeneficiaireController');
-Route::resource('contact', 'ContactController');
-Route::resource('trackingdemande', 'TrackingDemandeController');
+Route::group([
+    'middleware' => 'jwt'
+], function() {
+    Route::resource('societe', 'SocieteController');
+    Route::resource('adherent', 'AdherentController');
+    Route::resource('dossier', 'DossierController');
+    Route::resource('demande', 'DemandeController');
+    Route::resource('beneficiaire', 'BeneficiaireController');
+    Route::resource('contact', 'ContactController');
+    Route::resource('trackingdemande', 'TrackingDemandeController');
+});
