@@ -18,5 +18,5 @@ class Adherent extends Model
         'societe_id'
     ]; */
 
-    protected $guarded = []
+    protected $guarded = [];
 }

@@ -15,16 +15,30 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([
-
-    'prefix' => 'auth'
-
+    'prefix' => 'role'
 ], function () {
+    Route::post('createrole', 'RoleController@createrole');
+    Route::post('assignrole', 'RoleController@assignrole');
+    Route::post('get', 'RoleController@getRoles');
+});
 
+Route::group([
+    'prefix' => 'permission'
+], function () {
+Route::post('user', 'RoleController@givePermissiontoUser');
+Route::post('role', 'RoleController@givePermissiontoRole');
+Route::post('sync', 'RoleController@syncPermissions');
+Route::post('revoke', 'RoleController@removePermission');
+Route::post('get', 'RoleController@getPermission');
+});
+
+Route::group([
+    'prefix' => 'auth'
+], function () {
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
-
 });
 
 Route::group([

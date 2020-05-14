@@ -13,7 +13,7 @@ $factory->define(Adherent::class, function (Faker $faker) {
         'nom' => $faker->lastName,
         'prenom' => $faker->firstName,
         'matricule' => $faker->randomNumber(8),
-        'rib' => $faker->bankAccountNumber,
+        'rib' => $faker->randomNumber(9),
         'situation' => $faker->randomElement(['Célibataire', 'Marié', 'Divorcé' , 'Veuf']),
         'couverture' => $faker->randomElement(['Base', 'Complémentaire']),
         'etat' => $faker->randomElement(['En Cours', 'Sortant']),
