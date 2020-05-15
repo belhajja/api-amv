@@ -14,24 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group([
-    'prefix' => 'role'
-], function () {
-    Route::post('createrole', 'RoleController@createrole');
-    Route::post('assignrole', 'RoleController@assignrole');
-    Route::post('get', 'RoleController@getRoles');
-});
-
-Route::group([
-    'prefix' => 'permission'
-], function () {
-Route::post('user', 'RoleController@givePermissiontoUser');
-Route::post('role', 'RoleController@givePermissiontoRole');
-Route::post('sync', 'RoleController@syncPermissions');
-Route::post('revoke', 'RoleController@removePermission');
-Route::post('get', 'RoleController@getPermission');
-});
-
+// Authentification and JWT TOKEN
 Route::group([
     'prefix' => 'auth'
 ], function () {
@@ -41,9 +24,35 @@ Route::group([
     Route::post('me', 'AuthController@me');
 });
 
+
 Route::group([
     'middleware' => 'jwt'
-], function() {
+], function () {
+
+    // Roles Management
+    Route::group([
+        'middleware' => 'permission:manage Roles'
+    ], function () {
+
+        Route::group([
+            'prefix' => 'role'
+        ], function () {
+            Route::post('createrole', 'RoleController@createrole');
+            Route::post('assignrole', 'RoleController@assignrole');
+            Route::post('get', 'RoleController@getRoles');
+        });
+
+        Route::group([
+            'prefix' => 'permission',
+        ], function () {
+            Route::post('user', 'RoleController@givePermissiontoUser');
+            Route::post('role', 'RoleController@givePermissiontoRole');
+            Route::post('sync', 'RoleController@syncPermissions');
+            Route::post('revoke', 'RoleController@removePermission');
+            Route::get('get', 'RoleController@getPermission');
+        });
+    });
+
     Route::resource('societe', 'SocieteController');
     Route::resource('adherent', 'AdherentController');
     Route::resource('dossier', 'DossierController');
@@ -51,4 +60,8 @@ Route::group([
     Route::resource('beneficiaire', 'BeneficiaireController');
     Route::resource('contact', 'ContactController');
     Route::resource('trackingdemande', 'TrackingDemandeController');
+
 });
+
+
+

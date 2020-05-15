@@ -7,6 +7,28 @@ use Illuminate\Http\Request;
 
 class DossierController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware('permission:view Dossier', ['only' => [
+            'index',
+            'show',
+        ]]);
+
+        $this->middleware('permission:create Dossier', ['only' => [
+            'store',
+        ]]);
+
+        $this->middleware('permission:edit Dossier', ['only' => [
+            'update',
+        ]]);
+
+        $this->middleware('permission:delete Dossier', ['only' => [
+            'destroy',
+        ]]);
+    }
+
+
     /**
      * Display a listing of the resource.
      *

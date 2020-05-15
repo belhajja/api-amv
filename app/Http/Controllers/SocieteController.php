@@ -7,6 +7,28 @@ use Illuminate\Http\Request;
 
 class SocieteController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:view Société', ['only' => [
+            'index',
+            'show',
+        ]]);
+
+        $this->middleware('permission:create Société', ['only' => [
+            'store',
+        ]]);
+
+        $this->middleware('permission:edit Société', ['only' => [
+            'update',
+        ]]);
+
+        $this->middleware('permission:delete Société', ['only' => [
+            'destroy',
+        ]]);
+    }
+
+
     /**
      * Display a listing of the resource.
      *

@@ -81,23 +81,28 @@ class RoleController extends Controller
     public function getPermission(Request $request){
         
         $user = User::find($request->user);
-        
-        switch ($request->type) {
-            case 'Names':
-                $permissions = $user->getPermissionNames();
-                break;
-            case 'Direct':
-                $permissions = $user->getDirectPermissions();
-                break;
-            case 'Role':
-                $permissions = $user->getPermissionsViaRoles();
-                break;
-            case 'All':
-                $permissions = $user->getAllPermissions();
-                break;
-        }
 
-        return $permissions;
+        if ($user) {
+            switch ($request->type) {
+                case 'Names':
+                    $permissions = $user->getPermissionNames();
+                    break;
+                case 'Direct':
+                    $permissions = $user->getDirectPermissions();
+                    break;
+                case 'Role':
+                    $permissions = $user->getPermissionsViaRoles();
+                    break;
+                case 'All':
+                    $permissions = $user->getAllPermissions();
+                    break;
+                default:
+                    return NULL;
+            }
+            return $permissions;
+        }
+        
+        return response()->json([],204); 
     }
 
     public function getRoles(Request $request){

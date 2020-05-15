@@ -7,6 +7,26 @@ use Illuminate\Http\Request;
 
 class DemandeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:view Demande', ['only' => [
+            'index',
+            'show',
+        ]]);
+
+        $this->middleware('permission:create Demande', ['only' => [
+            'store',
+        ]]);
+
+        $this->middleware('permission:edit Demande', ['only' => [
+            'update',
+        ]]);
+
+        $this->middleware('permission:delete Demande', ['only' => [
+            'destroy',
+        ]]);
+    }
+
     /**
      * Display a listing of the resource.
      *

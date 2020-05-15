@@ -7,6 +7,28 @@ use Illuminate\Http\Request;
 
 class TrackingDemandeController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:view Tracking Demande', ['only' => [
+            'index',
+            'show',
+        ]]);
+
+        $this->middleware('permission:create Tracking Demande', ['only' => [
+            'store',
+        ]]);
+
+        $this->middleware('permission:edit Tracking Demande', ['only' => [
+            'update',
+        ]]);
+
+        $this->middleware('permission:delete Tracking Demande', ['only' => [
+            'destroy',
+        ]]);
+    }
+
+
     /**
      * Display a listing of the resource.
      *

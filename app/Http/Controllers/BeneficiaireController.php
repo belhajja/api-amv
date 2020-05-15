@@ -7,6 +7,27 @@ use Illuminate\Http\Request;
 
 class BeneficiaireController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:view Bénéficiaire', ['only' => [
+            'index',
+            'show',
+        ]]);
+
+        $this->middleware('permission:create Bénéficiaire', ['only' => [
+            'store',
+        ]]);
+
+        $this->middleware('permission:edit Bénéficiaire', ['only' => [
+            'update',
+        ]]);
+
+        $this->middleware('permission:delete Bénéficiaire', ['only' => [
+            'destroy',
+        ]]);
+    }
+
     /**
      * Display a listing of the resource.
      *

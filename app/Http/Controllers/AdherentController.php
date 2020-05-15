@@ -7,6 +7,27 @@ use Illuminate\Http\Request;
 
 class AdherentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:view Adhérent', ['only' => [
+            'index',
+            'show',
+        ]]);
+
+        $this->middleware('permission:create Adhérent', ['only' => [
+            'store',
+        ]]);
+
+        $this->middleware('permission:edit Adhérent', ['only' => [
+            'update',
+        ]]);
+
+        $this->middleware('permission:delete Adhérent', ['only' => [
+            'destroy',
+        ]]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -43,6 +64,12 @@ class AdherentController extends Controller
 
     public function show(Adherent $adherent)
     {
+        if (!$adherent){
+            return response()->json([
+                'message' => 'Objet inexistant'
+            ],404);
+        }
+        
         return $adherent;
     }
 

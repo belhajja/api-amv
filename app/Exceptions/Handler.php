@@ -53,17 +53,22 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if ($exception instanceof TokenInvalidException) {
+
+        if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
+           
+            return response()->json(['error' => 'You do not have the required authorization.'], 403);
+        }
+        elseif ($exception instanceof TokenInvalidException) {
             
-            return response()->json(['error' => 'Token is Invalid'], 400);
+            return response()->json(['error' => 'Token is Invalid'], 401);
         }
         elseif ($exception instanceof TokenExpiredException ) {
             
-            return response()->json(['error' => 'Token Expired'], 400);
+            return response()->json(['error' => 'Token Expired'], 401);
         }
         elseif ($exception instanceof JWTException ) {
             
-            return response()->json(['error' => 'There\'s something wrong with your Token'], 400);
+            return response()->json(['error' => 'There\'s something wrong with your Token'], 401);
         }
 
         return parent::render($request, $exception);

@@ -1,7 +1,9 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PermissionSeeder extends Seeder
 {
@@ -12,6 +14,19 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
+
+        //Default Super Admin Role
+        Role::create(['name' => 'Super Admin']);
+
+        // Super Admin user creation 
+        $user = new User();
+        $user->name = "Amine";
+        $user->email = "belhajja.med.amine@gmail.com";
+        $user->password = bcrypt('password');
+        $user->save();
+
+        $user->assignRole("Super Admin");
+
         //Société
         Permission::create(['name' => 'create Société']);
         Permission::create(['name' => 'edit Société']);
@@ -59,7 +74,9 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'edit Contact']);
         Permission::create(['name' => 'delete Contact']);
         Permission::create(['name' => 'view Contact']); 
-        
+
+        //Roles
+        Permission::create(['name' => 'manage Roles']);
         
     }
 }
