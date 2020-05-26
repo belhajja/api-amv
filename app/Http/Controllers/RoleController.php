@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Adherent;
+use App\Societe;
 use App\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -105,13 +107,54 @@ class RoleController extends Controller
         return response()->json([],204); 
     }
 
-    public function getRoles(Request $request){
+    public function getRoles(User $user){
 
-        $user = User::find($request->user);
         $roles = $user->getRoleNames();
 
         return $roles;
 
+    }
+
+    public function setAttachedAdherent(Request $request){
+
+        $user = User::find($request->user);
+        $adherent = Adherent::find($request->adherent);
+
+        //purge previous settings if any
+
+        if ($user->societes()){
+            $user->societes()->detach();
+        }
+        
+        $user->adherents()->attach($adherent);
+
+        return response()->json(['Success'],200);
+    }
+
+    public function setAttachedSociete(Request $request){
+
+        $user = User::find($request->user);
+        $societe = Societe::find($request->societe);
+
+        //purge previous settings if any
+
+        if ($user->adherents()){
+            $user->adherents()->detach();
+        }
+
+        $user->societes()->attach($societe);
+
+        return response()->json(['Success'],200);
+    }
+
+    public function getAttachedModels(Request $request){
+
+        switch ($request->type){
+            case 'sociétés':
+                return $request->user->societes();
+            case 'adhérents':
+                return $request->user->adherents();
+        }
     }
 
 }

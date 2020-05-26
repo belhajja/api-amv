@@ -28,8 +28,9 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token','pivot'
     ];
+
 
     /**
      * The attributes that should be cast to native types.
@@ -54,4 +55,15 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function societes()
+    {
+        return $this->belongsToMany(Societe::class);
+    }
+
+    public function adherents()
+    {
+        return $this->belongsToMany(Adherent::class);
+    }
+
 }

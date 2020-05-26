@@ -36,6 +36,8 @@ class DossierController extends Controller
      */
     public function index()
     {
+
+        return Dossier::Filter()->get();
         $dossiers = Dossier::all();
 
         return response()->json($dossiers);

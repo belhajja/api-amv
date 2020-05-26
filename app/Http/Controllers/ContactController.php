@@ -36,6 +36,8 @@ class ContactController extends Controller
      */
     public function index()
     {
+
+        return Contact::Filter()->get();
         $contacts = Contact::all();
 
         return response()->json($contacts);

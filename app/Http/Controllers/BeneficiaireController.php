@@ -35,6 +35,8 @@ class BeneficiaireController extends Controller
      */
     public function index()
     {
+        return Beneficiaire::Filter()->get();
+
         $beneficiaires = Beneficiaire::all();
 
         return response()->json($beneficiaires);

@@ -12,6 +12,6 @@ class BeneficiaireSeeder extends Seeder
      */
     public function run()
     {
-        factory(Beneficiaire::class, 10)->create();
+        factory(Beneficiaire::class, 500)->create();
     }
 }

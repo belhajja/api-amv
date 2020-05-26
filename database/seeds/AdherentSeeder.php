@@ -12,6 +12,6 @@ class AdherentSeeder extends Seeder
      */
     public function run()
     {
-        factory(Adherent::class, 10)->create();
+        factory(Adherent::class, 500)->create();
     }
 }

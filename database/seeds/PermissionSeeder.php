@@ -3,7 +3,6 @@
 use App\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class PermissionSeeder extends Seeder
 {
@@ -14,18 +13,8 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-
-        //Default Super Admin Role
-        Role::create(['name' => 'Super Admin']);
-
-        // Super Admin user creation 
-        $user = new User();
-        $user->name = "Amine";
-        $user->email = "belhajja.med.amine@gmail.com";
-        $user->password = bcrypt('password');
-        $user->save();
-
-        $user->assignRole("Super Admin");
+    
+        
 
         //Société
         Permission::create(['name' => 'create Société']);
@@ -63,6 +52,13 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'delete Demande Dossier']);
         Permission::create(['name' => 'view Demande Dossier']);
 
+        //Demande Dossier
+        Permission::create(['name' => 'create Dossier']);
+        Permission::create(['name' => 'edit Dossier']);
+        Permission::create(['name' => 'delete Dossier']);
+        Permission::create(['name' => 'view Dossier']);
+
+
         //Tracking Demande
         Permission::create(['name' => 'create Tracking Demande']);
         Permission::create(['name' => 'edit Tracking Demande']);
@@ -77,6 +73,53 @@ class PermissionSeeder extends Seeder
 
         //Roles
         Permission::create(['name' => 'manage Roles']);
-        
+
+        // Access Permissions
+        Permission::create(['name' => 'Access All']);
+        Permission::create(['name' => 'Access Manager']);
+        Permission::create(['name' => 'Access User']);
+
+        // Administrateur user creation 
+        $user = new User();
+        $user->name = "Administrateur";
+        $user->email = "administrateur@gmail.com";
+        $user->password = bcrypt('password');
+        $user->save();
+
+        $user->givePermissionTo("Access All");
+
+        // Manager user creation 
+        $user = new User();
+        $user->name = "Manager";
+        $user->email = "manager@gmail.com";
+        $user->password = bcrypt('password');
+        $user->save();
+
+        $user->givePermissionTo("Access Manager");
+        $user->givePermissionTo("view Société");
+        $user->givePermissionTo("view Adhérent");
+        $user->givePermissionTo("view Bénéficiaire");
+        $user->givePermissionTo("view Demande Société");
+        $user->givePermissionTo("view Demande Adhérent");
+        $user->givePermissionTo("view Demande Dossier");
+        $user->givePermissionTo("view Dossier");
+        $user->givePermissionTo("view Tracking Demande");
+        $user->givePermissionTo("view Contact");
+
+
+        // user creation 
+        $user = new User();
+        $user->name = "User";
+        $user->email = "user@gmail.com";
+        $user->password = bcrypt('password');
+        $user->save();
+
+        $user->givePermissionTo("Access User");
+        $user->givePermissionTo("view Adhérent");
+        $user->givePermissionTo("view Bénéficiaire");
+        $user->givePermissionTo("view Demande Adhérent");
+        $user->givePermissionTo("view Demande Dossier");
+        $user->givePermissionTo("view Dossier");
+        $user->givePermissionTo("view Tracking Demande");
     }
 }

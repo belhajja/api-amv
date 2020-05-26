@@ -36,6 +36,8 @@ class SocieteController extends Controller
      */
     public function index()
     {
+
+        return Societe::Filter()->get();
         $societes = Societe::all();
 
         return response()->json($societes);

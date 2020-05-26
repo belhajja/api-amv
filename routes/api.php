@@ -39,7 +39,7 @@ Route::group([
         ], function () {
             Route::post('createrole', 'RoleController@createrole');
             Route::post('assignrole', 'RoleController@assignrole');
-            Route::post('get', 'RoleController@getRoles');
+            Route::get('get/{user}', 'RoleController@getRoles');
         });
 
         Route::group([
@@ -50,6 +50,8 @@ Route::group([
             Route::post('sync', 'RoleController@syncPermissions');
             Route::post('revoke', 'RoleController@removePermission');
             Route::get('get', 'RoleController@getPermission');
+            Route::post('attachsociete', 'RoleController@setAttachedSociete');
+            Route::post('attachadherent', 'RoleController@setAttachedAdherent');
         });
     });
 

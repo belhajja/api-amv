@@ -12,6 +12,6 @@ class TrackingDemandeSeeder extends Seeder
      */
     public function run()
     {
-        factory(TrackingDemande::class, 10)->create();
+        factory(TrackingDemande::class, 500)->create();
     }
 }

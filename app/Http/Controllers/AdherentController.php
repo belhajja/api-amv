@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Adherent;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdherentController extends Controller
 {
@@ -35,6 +37,9 @@ class AdherentController extends Controller
      */
     public function index()
     {
+
+        return $adherents = Adherent::Filter()->get();
+
         $adherents = Adherent::all();
 
         return response()->json($adherents);

@@ -36,6 +36,8 @@ class TrackingDemandeController extends Controller
      */
     public function index()
     {
+        return TrackingDemande::Filter()->get();
+
         $trackingdemandes = TrackingDemande::all();
 
         return response()->json($trackingdemandes);
