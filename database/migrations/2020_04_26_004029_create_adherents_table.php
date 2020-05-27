@@ -14,7 +14,7 @@ class CreateAdherentsTable extends Migration
     public function up()
     {
         Schema::create('adherents', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('societe_id');
             $table->string('nom');
             $table->string('prenom');

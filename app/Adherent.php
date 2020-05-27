@@ -28,9 +28,9 @@ class Adherent extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function societes()
+    public function societe()
     {
-        return $this->belongsToMany(Societe::class);
+        return $this->belongsTo(Societe::class);
     }
 
     public function scopeFilter($query)

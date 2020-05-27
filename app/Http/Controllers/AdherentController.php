@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Adherent;
-use App\User;
+use App\Http\Resources\Adherent as ResourcesAdherent;
+use App\Http\Resources\AdherentCollection;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class AdherentController extends Controller
 {
@@ -38,11 +38,12 @@ class AdherentController extends Controller
     public function index()
     {
 
-        return $adherents = Adherent::Filter()->get();
+        $adherents = Adherent::Filter()->get();
 
-        $adherents = Adherent::all();
+        return (new AdherentCollection($adherents))
+        ->response()
+        ->setStatusCode(200);
 
-        return response()->json($adherents);
     }
 
     public function store(Request $request)
@@ -58,24 +59,32 @@ class AdherentController extends Controller
             'date_adhesion'=> "required",
             'societe_id'=> "required"
         ]);
+        
+        if (Adherent::Filter()->where('societe_id','=',$request->societe_id)->first())
+        {
+            $adherent = Adherent::create($request->all());
 
-        $adherent = Adherent::create($request->all());
+            return (new ResourcesAdherent($adherent))
+            ->response()
+            ->setStatusCode(200);
+        }
 
-        return response()->json([
-            'message' => 'succès ! Nouveau Adhèrent crée',
-            'adherent' => $adherent
-        ]);
+        return HTTPReponse(403);
+
     }
 
     public function show(Adherent $adherent)
     {
-        if (!$adherent){
-            return response()->json([
-                'message' => 'Objet inexistant'
-            ],404);
+        $adherent = Adherent::Filter()->find($adherent)->first();
+
+        if ($adherent){
+            return (new ResourcesAdherent($adherent))
+            ->response()
+            ->setStatusCode(200);
         }
+
+        return HTTPReponse(403);
         
-        return $adherent;
     }
 
     public function update(Request $request, Adherent $adherent)
@@ -92,21 +101,31 @@ class AdherentController extends Controller
             'societe_id'=> "nullable"
         ]);
 
-        $adherent->update($request->all());
+        if (Adherent::Filter()->find($adherent)->first())
+        {
+            $adherent->update($request->all());
 
-        return response()->json([
-            'message' => 'Succès ! Adherent mis à jour',
-            'adherent' => $adherent
-        ]);
+            return (new ResourcesAdherent($adherent))
+            ->response()
+            ->setStatusCode(200);
+        }
+
+        return HTTPReponse(403);
+
     }
 
     public function destroy(Adherent $adherent)
     {
-        $adherent->delete();
 
-        return response()->json([
-            'message' => 'Adhèrent supprimé avec succès!'
-        ]);
+        if (Adherent::Filter()->find($adherent)->first())
+        {
+            $adherent->delete();
+
+            return HTTPReponse(204);
+        }
+
+        return HTTPReponse(403);
+        
     }
 
 }

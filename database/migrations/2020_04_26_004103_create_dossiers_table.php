@@ -14,7 +14,7 @@ class CreateDossiersTable extends Migration
     public function up()
     {
         Schema::create('dossiers', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('adherent_id');
             $table->unsignedBigInteger('beneficiaire_id')->nullable();
             $table->string('numero');

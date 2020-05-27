@@ -14,7 +14,7 @@ class CreateSocietesTable extends Migration
     public function up()
     {
         Schema::create('societes', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('numero_police');
             $table->string('nom');
             $table->string('adresse');

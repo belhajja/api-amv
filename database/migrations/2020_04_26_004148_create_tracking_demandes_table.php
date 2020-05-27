@@ -14,7 +14,7 @@ class CreateTrackingDemandesTable extends Migration
     public function up()
     {
         Schema::create('tracking_demandes', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('type_sort');
             $table->date('date_sort');
             $table->integer('delai');
