@@ -63,6 +63,8 @@ Route::group([
     Route::resource('contact', 'ContactController');
     Route::resource('trackingdemande', 'TrackingDemandeController');
 
+    Route::post('demande/societe', 'DemandeController@getDemandeBySociete');
+
 });
 
 

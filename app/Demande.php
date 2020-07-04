@@ -58,4 +58,19 @@ class Demande extends Model
                 ->pluck('adherents.id'));
         }
     }
+
+    public function scopeSociete($query)
+    {
+        return $query->where('type', '=', 'Société');
+    }
+
+    public function scopeAdherent($query)
+    {
+        return $query->where('type', '=', 'Adhérent');
+    }
+
+    public function scopeDossier($query)
+    {
+        return $query->where('type', '=', 'Dossier');
+    }
 }

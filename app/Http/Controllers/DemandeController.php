@@ -39,6 +39,16 @@ class DemandeController extends Controller
         return response()->json($demandes);
     }
 
+    public function getDemandeBySociete(Request $request)
+    {
+        $societe = $request->societe;
+
+        $demandes = Demande::Societe()->where('societe_id','=',$societe)->get();
+
+        return $demandes;
+        //$adherent = Adherent::Filter()->find($adherent)->first();
+    }
+
     public function store(Request $request)
     {
         $request->validate([

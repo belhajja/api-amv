@@ -38,6 +38,7 @@ class AdherentController extends Controller
     public function index()
     {
 
+        return Adherent::with('societe')->get();
         $adherents = Adherent::Filter()->get();
 
         return (new AdherentCollection($adherents))
