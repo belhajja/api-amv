@@ -57,7 +57,7 @@ class BeneficiaireController extends Controller
 
         return response()->json([
             'message' => 'succès ! Nouveau Bénéficiaire crée',
-            'adherent' => $beneficiaire
+            'beneficiaire' => $beneficiaire
         ]);
     }
 

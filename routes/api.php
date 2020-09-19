@@ -49,7 +49,7 @@ Route::group([
             Route::post('role', 'RoleController@givePermissiontoRole');
             Route::post('sync', 'RoleController@syncPermissions');
             Route::post('revoke', 'RoleController@removePermission');
-            Route::get('get', 'RoleController@getPermission');
+            Route::get('get/{user}', 'RoleController@getPermission');
             Route::post('attachsociete', 'RoleController@setAttachedSociete');
             Route::post('attachadherent', 'RoleController@setAttachedAdherent');
         });

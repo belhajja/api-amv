@@ -60,18 +60,13 @@ class AdherentController extends Controller
             'date_adhesion'=> "required",
             'societe_id'=> "required"
         ]);
-        
-        if (Adherent::Filter()->where('societe_id','=',$request->societe_id)->first())
-        {
-            $adherent = Adherent::create($request->all());
+            
+        $adherent = Adherent::create($request->all());
 
-            return (new ResourcesAdherent($adherent))
-            ->response()
-            ->setStatusCode(200);
-        }
-
-        return HTTPReponse(403);
-
+        return response()->json([
+            'message' => 'succès ! Nouveau Adhérent crée',
+            'adherent' => $adherent
+        ]);
     }
 
     public function show(Adherent $adherent)
@@ -79,9 +74,7 @@ class AdherentController extends Controller
         $adherent = Adherent::Filter()->find($adherent)->first();
 
         if ($adherent){
-            return (new ResourcesAdherent($adherent))
-            ->response()
-            ->setStatusCode(200);
+            return response()->json($adherent);
         }
 
         return HTTPReponse(403);
@@ -106,9 +99,10 @@ class AdherentController extends Controller
         {
             $adherent->update($request->all());
 
-            return (new ResourcesAdherent($adherent))
-            ->response()
-            ->setStatusCode(200);
+            return response()->json([
+                'message' => 'succès ! Adhérent mis à jour',
+                'adherent' => $adherent
+            ]);
         }
 
         return HTTPReponse(403);
