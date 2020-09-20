@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Beneficiaire;
+use App\Http\Resources\BeneficiaireCollection;
+use App\Http\Resources\Beneficiaire As ResourcesBeneficiaire;
 use Illuminate\Http\Request;
 
 class BeneficiaireController extends Controller
@@ -35,11 +37,12 @@ class BeneficiaireController extends Controller
      */
     public function index()
     {
-        return Beneficiaire::Filter()->get();
+        $beneficiaires = Beneficiaire::Filter()->get();
 
-        $beneficiaires = Beneficiaire::all();
+        return (new BeneficiaireCollection($beneficiaires))
+        ->response()
+        ->setStatusCode(200);
 
-        return response()->json($beneficiaires);
     }
 
     public function store(Request $request)
@@ -55,15 +58,22 @@ class BeneficiaireController extends Controller
 
         $beneficiaire = Beneficiaire::create($request->all());
 
-        return response()->json([
-            'message' => 'succès ! Nouveau Bénéficiaire crée',
-            'beneficiaire' => $beneficiaire
-        ]);
+        return (new ResourcesBeneficiaire($beneficiaire))
+        ->response()
+        ->setStatusCode(200);
     }
 
     public function show(Beneficiaire $beneficiaire)
     {
-        return $beneficiaire;
+        $beneficiaire = Beneficiaire::Filter()->find($beneficiaire)->first();
+
+        if ($beneficiaire){
+            return (new ResourcesBeneficiaire($beneficiaire))
+            ->response()
+            ->setStatusCode(200);
+        }
+
+        return HTTPReponse(403);
     }
 
     public function update(Request $request, Beneficiaire $beneficiaire)
@@ -79,10 +89,9 @@ class BeneficiaireController extends Controller
 
         $beneficiaire->update($request->all());
 
-        return response()->json([
-            'message' => 'Succès ! Bénéficiaire mis à jour',
-            'beneficiaire' => $beneficiaire
-        ]);
+        return (new ResourcesBeneficiaire($beneficiaire))
+            ->response()
+            ->setStatusCode(200);
     }
 
     public function destroy(Beneficiaire $beneficiaire)

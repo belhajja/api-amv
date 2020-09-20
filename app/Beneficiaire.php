@@ -13,6 +13,10 @@ class Beneficiaire extends Model
 
     protected $hidden = ['pivot'];
 
+    public function adherent()
+    {
+        return $this->belongsTo(Adherent::class);
+    }
     
     public function scopeFilter($query)
     {

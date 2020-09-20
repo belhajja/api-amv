@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SocieteCollection;
+use App\Http\Resources\Societe as ResourcesSociete;
 use App\Societe;
 use Illuminate\Http\Request;
 
@@ -36,11 +38,12 @@ class SocieteController extends Controller
      */
     public function index()
     {
+        //$societes = Societe::with('adherents')->Filter()->get();
+        $societes = Societe::Filter()->get();
 
-        return Societe::Filter()->get();
-        $societes = Societe::all();
-
-        return response()->json($societes);
+        return (new SocieteCollection($societes))
+        ->response()
+        ->setStatusCode(200);
     }
 
     public function store(Request $request)
@@ -53,15 +56,22 @@ class SocieteController extends Controller
 
         $societe = Societe::create($request->all());
 
-        return response()->json([
-            'message' => 'succès ! Nouvelle Société crée',
-            'societe' => $societe
-        ]);
+        return (new ResourcesSociete($societe))
+        ->response()
+        ->setStatusCode(200);
     }
 
     public function show(Societe $societe)
     {
-        return $societe;
+        $societe = Societe::Filter()->find($societe)->first();
+
+        if ($societe){
+            return (new ResourcesSociete($societe))
+            ->response()
+            ->setStatusCode(200);
+        }
+
+        return HTTPReponse(403);
     }
 
     public function update(Request $request, Societe $societe)
@@ -74,18 +84,20 @@ class SocieteController extends Controller
         
         $societe->update($request->all());
 
-        return response()->json([
-            'message' => 'Succès ! Société mise à jour',
-            'societe' => $societe
-        ]);
+        return (new ResourcesSociete($societe))
+        ->response()
+        ->setStatusCode(200);
     }
 
     public function destroy(Societe $societe)
     {
-        $societe->delete();
+        if (Societe::Filter()->find($societe)->first())
+        {
+            $societe->delete();
 
-        return response()->json([
-            'message' => 'Société supprimée avec succès!'
-        ]);
+            return HTTPReponse(204);
+        }
+
+        return HTTPReponse(403);
     }
 }

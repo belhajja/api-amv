@@ -16,14 +16,16 @@ class Adherent extends JsonResource
     {
         return [
             'id'            => $this->id,
-            'Nom'           => $this->nom .' '.$this->prenom,
+            'Nom'           => $this->nom,
+            'Prenom'        => $this->prenom,
             'Matricule'     => $this->matricule,
             'Rib'           => $this->rib,
             'Situation'     => $this->situation,
             'Couverture'    => $this->couverture,
             'Etat'          => $this->etat,
             'Adhesion'      => $this->date_adhesion,
-            'Société'       => (new Societe($this->whenLoaded('societe')))
+            'Société'       => (new Societe($this->whenLoaded('societe'))),
+            'Bénéficiaires' => (new BeneficiaireCollection($this->whenLoaded('beneficiaires')))
         ];
 
     }

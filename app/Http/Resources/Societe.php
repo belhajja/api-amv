@@ -15,7 +15,14 @@ class Societe extends JsonResource
     public function toArray($request)
     {
 
-        return ['nom' => $this->nom];
-        return parent::toArray($request);
+        //return parent::toArray($request);
+
+        return [
+            'id'            => $this->id,
+            'numero_police' => $this->numero_police,
+            'nom'           => $this->nom,
+            'adress'        => $this->adresse,
+            'Adhérents'     => (new AdherentCollection($this->whenLoaded('adherents')))
+        ];
     }
 }

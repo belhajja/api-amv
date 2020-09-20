@@ -37,8 +37,7 @@ class AdherentController extends Controller
      */
     public function index()
     {
-
-        return Adherent::with('societe')->get();
+        //$adherents = Adherent::with('societe')->with('beneficiaires')->Filter()->get();
         $adherents = Adherent::Filter()->get();
 
         return (new AdherentCollection($adherents))
@@ -71,10 +70,14 @@ class AdherentController extends Controller
 
     public function show(Adherent $adherent)
     {
+
+        //$adherent = Adherent::with('societe')->Filter()->find($adherent)->first();
         $adherent = Adherent::Filter()->find($adherent)->first();
 
         if ($adherent){
-            return response()->json($adherent);
+            return (new ResourcesAdherent($adherent))
+            ->response()
+            ->setStatusCode(200);
         }
 
         return HTTPReponse(403);
@@ -99,10 +102,9 @@ class AdherentController extends Controller
         {
             $adherent->update($request->all());
 
-            return response()->json([
-                'message' => 'succès ! Adhérent mis à jour',
-                'adherent' => $adherent
-            ]);
+            return (new ResourcesAdherent($adherent))
+            ->response()
+            ->setStatusCode(200);
         }
 
         return HTTPReponse(403);
