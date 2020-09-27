@@ -41,9 +41,8 @@ class AdherentController extends Controller
         $adherents = Adherent::Filter()->get();
 
         return (new AdherentCollection($adherents))
-        ->response()
-        ->setStatusCode(200);
-
+            ->response()
+            ->setStatusCode(200);
     }
 
     public function store(Request $request)
@@ -52,20 +51,19 @@ class AdherentController extends Controller
             "nom" => "required",
             "prenom" => "required",
             'matricule' => "required",
-            'rib'=> "required",
-            'situation'=> "required",
-            'couverture'=> "required",
-            'etat'=> "required",
-            'date_adhesion'=> "required",
-            'societe_id'=> "required"
+            'rib' => "required",
+            'situation' => "required",
+            'couverture' => "required",
+            'etat' => "required",
+            'date_adhesion' => "required",
+            'societe_id' => "required"
         ]);
-            
+
         $adherent = Adherent::create($request->all());
 
-        return response()->json([
-            'message' => 'succès ! Nouveau Adhérent crée',
-            'adherent' => $adherent
-        ]);
+        return (new ResourcesAdherent($adherent))
+            ->response()
+            ->setStatusCode(200);
     }
 
     public function show(Adherent $adherent)
@@ -74,14 +72,13 @@ class AdherentController extends Controller
         //$adherent = Adherent::with('societe')->Filter()->find($adherent)->first();
         $adherent = Adherent::Filter()->find($adherent)->first();
 
-        if ($adherent){
+        if ($adherent) {
             return (new ResourcesAdherent($adherent))
-            ->response()
-            ->setStatusCode(200);
+                ->response()
+                ->setStatusCode(200);
         }
 
         return HTTPReponse(403);
-        
     }
 
     public function update(Request $request, Adherent $adherent)
@@ -90,39 +87,36 @@ class AdherentController extends Controller
             "nom" => "nullable",
             "prenom" => "nullable",
             'matricule' => "nullable",
-            'rib'=> "nullable",
-            'situation'=> "nullable",
-            'couverture'=> "nullable",
-            'etat'=> "nullable",
-            'date_adhesion'=> "nullable",
-            'societe_id'=> "nullable"
+            'rib' => "nullable",
+            'situation' => "nullable",
+            'couverture' => "nullable",
+            'etat' => "nullable",
+            'date_adhesion' => "nullable",
+            'societe_id' => "nullable"
         ]);
 
-        if (Adherent::Filter()->find($adherent)->first())
-        {
-            $adherent->update($request->all());
-
-            return (new ResourcesAdherent($adherent))
-            ->response()
-            ->setStatusCode(200);
+        if (Adherent::Filter()->find($adherent)->first()) {
+            if ($adherent->update($request->all())) {
+                //$adherent = Adherent::with('societe')->Filter()->find($adherent)->first();
+                return (new ResourcesAdherent($adherent))
+                    ->response()
+                    ->setStatusCode(200);
+            }
+            return HTTPReponse(500);
         }
 
         return HTTPReponse(403);
-
     }
 
     public function destroy(Adherent $adherent)
     {
 
-        if (Adherent::Filter()->find($adherent)->first())
-        {
+        if (Adherent::Filter()->find($adherent)->first()) {
             $adherent->delete();
 
             return HTTPReponse(204);
         }
 
         return HTTPReponse(403);
-        
     }
-
 }
