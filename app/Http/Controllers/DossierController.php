@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Dossier;
+use App\Http\Resources\DossierCollection;
 use Illuminate\Http\Request;
 
 class DossierController extends Controller
@@ -37,10 +38,12 @@ class DossierController extends Controller
     public function index()
     {
 
-        return Dossier::Filter()->get();
-        $dossiers = Dossier::all();
+        $dossiers = Dossier::with('adherent')->with('beneficiaire')->with('demandes')->Filter()->get();
 
-        return response()->json($dossiers);
+        return (new DossierCollection($dossiers))
+            ->response()
+            ->setStatusCode(200);
+    
     }
 
     public function store(Request $request)

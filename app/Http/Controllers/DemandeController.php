@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Demande;
+use App\Http\Resources\Demande as ResourcesDemande;
+use App\Http\Resources\DemandeCollection;
 use Illuminate\Http\Request;
 
 class DemandeController extends Controller
@@ -34,9 +36,13 @@ class DemandeController extends Controller
      */
     public function index()
     {
-        $demandes = Demande::all();
+        $demandes = Demande::with('societe')->with('adherent')->with('dossier')->Filter()->get();
+        //$adherents = Adherent::Filter()->get();
 
-        return response()->json($demandes);
+        //return $demandes;
+        return (new DemandeCollection($demandes))
+            ->response()
+            ->setStatusCode(200);
     }
 
     public function getDemandeBySociete(Request $request)
@@ -75,7 +81,16 @@ class DemandeController extends Controller
 
     public function show(Demande $demande)
     {
-        return $demande;
+        $demande = Demande::with('societe')->with('adherent')->with('dossier')->Filter()->find($demande)->first();
+        //$adherent = Adherent::Filter()->find($adherent)->first();
+
+        if ($demande) {
+            return (new ResourcesDemande($demande))
+                ->response()
+                ->setStatusCode(200);
+        }
+
+        return HTTPReponse(403);
     }
 
     public function update(Request $request, Demande $demande)

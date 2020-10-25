@@ -11,6 +11,21 @@ class Dossier extends Model
 
     protected $hidden = ['pivot'];
 
+    public function adherent()
+    {
+        return $this->belongsTo(Adherent::class);
+    }
+
+    public function beneficiaire()
+    {
+        return $this->belongsTo(Beneficiaire::class);
+    }
+
+    public function demandes()
+    {
+        return $this->hasMany(Demande::class);
+    }
+
     public function scopeFilter($query)
     {
         $user = auth()->user();

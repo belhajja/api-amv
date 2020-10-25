@@ -26,7 +26,9 @@ class Adherent extends JsonResource
             'etat'          => $this->etat,
             'date_adhesion' => $this->date_adhesion,
             'societe'       => (new Societe($this->whenLoaded('societe'))),
-            'beneficiaires' => (new BeneficiaireCollection($this->whenLoaded('beneficiaires')))
+            'demandes'      => (new DemandeCollection($this->whenLoaded('demandes'))),
+            'beneficiaires' => (new BeneficiaireCollection($this->whenLoaded('beneficiaires'))),
+            'dossiers' => (new BeneficiaireCollection($this->whenLoaded('dossiers')))
         ];
 
     }

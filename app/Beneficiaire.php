@@ -17,6 +17,11 @@ class Beneficiaire extends Model
     {
         return $this->belongsTo(Adherent::class);
     }
+
+    public function dossiers()
+    {
+        return $this->hasMany(Dossier::class);
+    }
     
     public function scopeFilter($query)
     {

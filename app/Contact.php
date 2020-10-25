@@ -11,6 +11,11 @@ class Contact extends Model
 
     protected $hidden = ['pivot'];
 
+    public function societe()
+    {
+        return $this->belongsTo(Societe::class);
+    }
+
     public function scopeFilter($query)
     {
         $user = auth()->user();

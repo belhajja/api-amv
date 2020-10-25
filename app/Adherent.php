@@ -38,6 +38,16 @@ class Adherent extends Model
         return $this->hasMany(Beneficiaire::class);
     }
 
+    public function dossiers()
+    {
+        return $this->hasMany(Dossier::class);
+    }
+
+    public function demandes()
+    {
+        return $this->hasMany(Demande::class);
+    }
+
     public function scopeFilter($query)
     {
         $user = auth()->user();
