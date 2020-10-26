@@ -13,12 +13,12 @@ class Demande extends Model
 
     public function societe()
     {
-        return $this->belongsTo(societe::class);
+        return $this->belongsTo(Societe::class);
     }
 
     public function adherent()
     {
-        return $this->belongsTo(adherent::class);
+        return $this->belongsTo(Adherent::class);
     }
 
     public function dossier()
