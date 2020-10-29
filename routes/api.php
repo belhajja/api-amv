@@ -43,6 +43,12 @@ Route::group([
         });
 
         Route::group([
+            'prefix' => 'users'
+        ], function () {
+            Route::get('getUsers', 'RoleController@getAllUsers');
+        });
+
+        Route::group([
             'prefix' => 'permission',
         ], function () {
             Route::post('user', 'RoleController@givePermissiontoUser');
@@ -52,6 +58,7 @@ Route::group([
             Route::get('get/{user}', 'RoleController@getPermission');
             Route::post('attachsociete', 'RoleController@setAttachedSociete');
             Route::post('attachadherent', 'RoleController@setAttachedAdherent');
+            Route::post('getattachedmodels', 'RoleController@getAttachedModels');
         });
     });
 

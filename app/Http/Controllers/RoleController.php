@@ -10,17 +10,19 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    public function createrole(Request $request){
-        
+    public function createrole(Request $request)
+    {
+
         $role = Role::create(['name' => $request->name]);
-        
+
         return response()->json([
             'message' => 'succès ! Nouveau Rôle crée',
             'role' => $role
         ]);
     }
-    
-    public function assignrole(Request $request) {
+
+    public function assignrole(Request $request)
+    {
 
         $user = User::find($request->user);
 
@@ -33,7 +35,8 @@ class RoleController extends Controller
         ]);
     }
 
-    public function givePermissiontoUser(Request $request){
+    public function givePermissiontoUser(Request $request)
+    {
 
         $user = User::find($request->user);
 
@@ -44,8 +47,9 @@ class RoleController extends Controller
         ]);
     }
 
-    public function givePermissiontoRole(Request $request){
-        
+    public function givePermissiontoRole(Request $request)
+    {
+
         $role = Role::find($request->role);
 
         $role->givePermissionTo($request->permission);
@@ -55,7 +59,8 @@ class RoleController extends Controller
         ]);
     }
 
-    public function syncPermissions(Request $request){
+    public function syncPermissions(Request $request)
+    {
 
         $role = Role::find($request->role);
 
@@ -66,10 +71,10 @@ class RoleController extends Controller
         return response()->json([
             'message' => 'succès ! Permissions synchronisées',
         ]);
-
     }
 
-    public function removePermission(Request $request){
+    public function removePermission(Request $request)
+    {
 
         $role = Role::find($request->role);
 
@@ -80,63 +85,90 @@ class RoleController extends Controller
         ]);
     }
 
-    public function getPermission(User $user){
+    public function getPermission(User $user)
+    {
 
         if ($user) {
             return $user->getAllPermissions()->makeHidden('pivot');
         }
-        
-        return response()->json([],204); 
+
+        return response()->json([], 204);
     }
 
-    public function getRoles(User $user){
+    public function getRoles(User $user)
+    {
 
         $roles = $user->getRoleNames();
 
         return $roles;
-
     }
 
-    public function setAttachedAdherent(Request $request){
+    public function setAttachedAdherent(Request $request)
+    {
 
         $user = User::find($request->user);
         $adherent = Adherent::find($request->adherent);
 
         //purge previous settings if any
 
-        if ($user->societes()){
+        if ($user->societes()) {
             $user->societes()->detach();
         }
-        
+
         $user->adherents()->attach($adherent);
 
-        return response()->json(['Success'],200);
+        return response()->json(['Success'], 200);
     }
 
-    public function setAttachedSociete(Request $request){
+    public function setAttachedSociete(Request $request)
+    {
 
         $user = User::find($request->user);
         $societe = Societe::find($request->societe);
 
         //purge previous settings if any
 
-        if ($user->adherents()){
+        if ($user->adherents()) {
             $user->adherents()->detach();
         }
 
         $user->societes()->attach($societe);
 
-        return response()->json(['Success'],200);
+        return $user->societes()->get();
+
+        return response()->json(['Success'], 200);
     }
 
-    public function getAttachedModels(Request $request){
+    public function getModelAttached(Request $request)
+    {
 
-        switch ($request->type){
+        $user = User::find($request->user);
+
+        if ($request->type == "manager") {
+            if ($user->societes()->get()) {
+                return $user->societes()->get();
+            }
+        } elseif ($request->type == "user") {
+            if ($user->adherents()->get()) {
+                return $user->adherents()->get();
+            }
+        }
+        return response()->json(['No entity linked to the current User'], 200);
+    }
+
+    public function getAttachedModels(Request $request)
+    {
+        $user = User::find($request->user);
+
+        switch ($request->type) {
             case 'sociétés':
-                return $request->user->societes();
+                return $user->societes()->get();
             case 'adhérents':
-                return $request->user->adherents();
+                return $user->adherents()->get();
         }
     }
 
+    public function getAllUsers(){
+        return User::all();
+    }
 }
