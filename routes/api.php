@@ -59,6 +59,8 @@ Route::group([
             Route::post('attachsociete', 'RoleController@setAttachedSociete');
             Route::post('attachadherent', 'RoleController@setAttachedAdherent');
             Route::post('getattachedmodels', 'RoleController@getAttachedModels');
+            Route::post('detachesociete', 'RoleController@DetacheSociete');
+            Route::post('detacheadherent', 'RoleController@DetacheAdherent');
         });
     });
 

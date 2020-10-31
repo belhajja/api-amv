@@ -117,6 +117,21 @@ class RoleController extends Controller
 
         $user->adherents()->attach($adherent);
 
+        return $user->adherents()->get();
+
+        return response()->json(['Success'], 200);
+    }
+
+    public function DetacheAdherent(Request $request)
+    {
+
+        $user = User::find($request->user);
+        $adherent = Adherent::find($request->adherent);
+
+        $user->adherents()->detach($adherent);
+
+        return $user->adherents()->get();
+
         return response()->json(['Success'], 200);
     }
 
@@ -139,8 +154,21 @@ class RoleController extends Controller
         return response()->json(['Success'], 200);
     }
 
+    public function DetacheSociete(Request $request)
+    {
+
+        $user = User::find($request->user);
+        $societe = Societe::find($request->societe);
+
+        $user->societes()->detach($societe);
+
+        return $user->societes()->get();
+
+    }
+
     public function getModelAttached(Request $request)
     {
+        
 
         $user = User::find($request->user);
 
@@ -158,17 +186,19 @@ class RoleController extends Controller
 
     public function getAttachedModels(Request $request)
     {
+
+        //return $request;
         $user = User::find($request->user);
 
         switch ($request->type) {
-            case 'sociétés':
+            case 'Manager':
                 return $user->societes()->get();
-            case 'adhérents':
+            case 'User':
                 return $user->adherents()->get();
         }
     }
 
     public function getAllUsers(){
-        return User::all();
+        return User::with('permissions')->get();
     }
 }
