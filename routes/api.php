@@ -22,6 +22,7 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
+    Route::get('{user}', 'RoleController@getPermission');
 });
 
 
@@ -55,10 +56,8 @@ Route::group([
             Route::post('role', 'RoleController@givePermissiontoRole');
             Route::post('sync', 'RoleController@syncPermissions');
             Route::post('revoke', 'RoleController@removePermission');
-            Route::get('get/{user}', 'RoleController@getPermission');
             Route::post('attachsociete', 'RoleController@setAttachedSociete');
             Route::post('attachadherent', 'RoleController@setAttachedAdherent');
-            Route::post('getattachedmodels', 'RoleController@getAttachedModels');
             Route::post('detachesociete', 'RoleController@DetacheSociete');
             Route::post('detacheadherent', 'RoleController@DetacheAdherent');
         });

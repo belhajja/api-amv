@@ -166,39 +166,11 @@ class RoleController extends Controller
 
     }
 
-    public function getModelAttached(Request $request)
-    {
-        
-
-        $user = User::find($request->user);
-
-        if ($request->type == "manager") {
-            if ($user->societes()->get()) {
-                return $user->societes()->get();
-            }
-        } elseif ($request->type == "user") {
-            if ($user->adherents()->get()) {
-                return $user->adherents()->get();
-            }
-        }
-        return response()->json(['No entity linked to the current User'], 200);
-    }
-
-    public function getAttachedModels(Request $request)
-    {
-
-        //return $request;
-        $user = User::find($request->user);
-
-        switch ($request->type) {
-            case 'Manager':
-                return $user->societes()->get();
-            case 'User':
-                return $user->adherents()->get();
-        }
-    }
-
     public function getAllUsers(){
-        return User::with('permissions')->get();
+        return User::with('societes')->with('adherents')->with('permissions')->with('roles')->get();
+    }
+
+    public function getUserPermissions(Request $request){
+        return auth()->user()->with('permissions')->with('roles')->get();
     }
 }
