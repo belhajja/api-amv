@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Adherent;
 use App\Societe;
 use App\User;
+use Exception;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -15,10 +16,31 @@ class RoleController extends Controller
 
         $role = Role::create(['name' => $request->name]);
 
-        return response()->json([
-            'message' => 'succès ! Nouveau Rôle crée',
-            'role' => $role
-        ]);
+        return $role;
+    }
+
+    public function deletRole(Request $request)
+    {
+
+        try {
+            $role = Role::findByName($request->name);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ]);
+        }
+
+        try {
+            $role->delete();
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ]);
+        }
+
+            return response()->json([
+                'message' => 'succès ! Rôle Supprimé',
+            ]);
     }
 
     public function assignrole(Request $request)
@@ -95,10 +117,10 @@ class RoleController extends Controller
         return response()->json([], 204);
     }
 
-    public function getRoles(User $user)
+    public function getRoles()
     {
 
-        $roles = $user->getRoleNames();
+        $roles = Role::all();
 
         return $roles;
     }
@@ -117,8 +139,6 @@ class RoleController extends Controller
 
         $user->adherents()->attach($adherent);
 
-        return $user->adherents()->get();
-
         return response()->json(['Success'], 200);
     }
 
@@ -129,8 +149,6 @@ class RoleController extends Controller
         $adherent = Adherent::find($request->adherent);
 
         $user->adherents()->detach($adherent);
-
-        return $user->adherents()->get();
 
         return response()->json(['Success'], 200);
     }
@@ -149,8 +167,6 @@ class RoleController extends Controller
 
         $user->societes()->attach($societe);
 
-        return $user->societes()->get();
-
         return response()->json(['Success'], 200);
     }
 
@@ -162,15 +178,16 @@ class RoleController extends Controller
 
         $user->societes()->detach($societe);
 
-        return $user->societes()->get();
-
+        return response()->json(['Success'], 200);
     }
 
-    public function getAllUsers(){
+    public function getAllUsers()
+    {
         return User::with('societes')->with('adherents')->with('permissions')->with('roles')->get();
     }
 
-    public function getUserPermissions(Request $request){
+    public function getUserPermissions(Request $request)
+    {
         return auth()->user()->with('permissions')->with('roles')->get();
     }
 }

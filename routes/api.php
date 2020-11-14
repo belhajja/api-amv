@@ -40,7 +40,8 @@ Route::group([
         ], function () {
             Route::post('createrole', 'RoleController@createrole');
             Route::post('assignrole', 'RoleController@assignrole');
-            Route::get('get/{user}', 'RoleController@getRoles');
+            Route::post('deleterole', 'RoleController@deletRole');
+            Route::get('getroles', 'RoleController@getRoles');
         });
 
         Route::group([
