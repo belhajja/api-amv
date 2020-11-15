@@ -14,7 +14,11 @@ class RoleController extends Controller
     public function createrole(Request $request)
     {
 
-        $role = Role::create(['name' => $request->name]);
+        try {
+            $role = Role::findByName($request->name);
+        } catch (Exception $e) {
+            $role = Role::create(['name' => $request->name]);
+        }
 
         return $role;
     }
@@ -120,7 +124,7 @@ class RoleController extends Controller
     public function getRoles()
     {
 
-        $roles = Role::all();
+        $roles = Role::with('permissions')->get();
 
         return $roles;
     }

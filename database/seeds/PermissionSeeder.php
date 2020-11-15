@@ -34,6 +34,12 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'delete Bénéficiaire']);
         Permission::create(['name' => 'view Bénéficiaire']);
 
+        //All Demande Société
+        Permission::create(['name' => 'create Demande']);
+        Permission::create(['name' => 'edit Demande']);
+        Permission::create(['name' => 'delete Demande']);
+        Permission::create(['name' => 'view Demande']);
+
         //Demande Société
         Permission::create(['name' => 'create Demande Société']);
         Permission::create(['name' => 'edit Demande Société']);
