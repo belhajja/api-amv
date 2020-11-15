@@ -2,6 +2,7 @@
 
 use App\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Contracts\Role;
 use Spatie\Permission\Models\Permission;
 
 class PermissionSeeder extends Seeder
@@ -92,7 +93,10 @@ class PermissionSeeder extends Seeder
         $user->password = bcrypt('password');
         $user->save();
 
-        $user->givePermissionTo("Access All");
+        $role = Role::create(['name' => 'Administrateur']);
+        
+        $role->givePermissionTo("Access All");
+        $role->givePermissionTo("manage Roles");
 
         // Manager user creation 
         $user = new User();
@@ -101,17 +105,20 @@ class PermissionSeeder extends Seeder
         $user->password = bcrypt('password');
         $user->save();
 
-        $user->givePermissionTo("Access Manager");
-        $user->givePermissionTo("view Société");
-        $user->givePermissionTo("view Adhérent");
-        $user->givePermissionTo("view Bénéficiaire");
-        $user->givePermissionTo("view Demande Société");
-        $user->givePermissionTo("view Demande Adhérent");
-        $user->givePermissionTo("view Demande Dossier");
-        $user->givePermissionTo("view Dossier");
-        $user->givePermissionTo("view Tracking Demande");
-        $user->givePermissionTo("view Contact");
+        $role = Role::create(['name' => 'Administrateur']);
 
+        $role->givePermissionTo("Access Manager");
+        $role->givePermissionTo("view Société");
+        $role->givePermissionTo("view Adhérent");
+        $role->givePermissionTo("view Bénéficiaire");
+        $role->givePermissionTo("view Demande Société");
+        $role->givePermissionTo("view Demande Adhérent");
+        $role->givePermissionTo("view Demande Dossier");
+        $role->givePermissionTo("view Dossier");
+        $role->givePermissionTo("view Tracking Demande");
+        $role->givePermissionTo("view Contact");
+
+        $user->assignRole($role);
 
         // user creation 
         $user = new User();
@@ -120,12 +127,16 @@ class PermissionSeeder extends Seeder
         $user->password = bcrypt('password');
         $user->save();
 
-        $user->givePermissionTo("Access User");
-        $user->givePermissionTo("view Adhérent");
-        $user->givePermissionTo("view Bénéficiaire");
-        $user->givePermissionTo("view Demande Adhérent");
-        $user->givePermissionTo("view Demande Dossier");
-        $user->givePermissionTo("view Dossier");
-        $user->givePermissionTo("view Tracking Demande");
+        $role = Role::create(['name' => 'Administrateur']);
+
+        $role->givePermissionTo("Access User");
+        $role->givePermissionTo("view Adhérent");
+        $role->givePermissionTo("view Bénéficiaire");
+        $role->givePermissionTo("view Demande Adhérent");
+        $role->givePermissionTo("view Demande Dossier");
+        $role->givePermissionTo("view Dossier");
+        $role->givePermissionTo("view Tracking Demande");
+
+        $user->assignRole($role);
     }
 }
