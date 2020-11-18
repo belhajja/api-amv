@@ -48,6 +48,7 @@ Route::group([
             'prefix' => 'users'
         ], function () {
             Route::get('getUsers', 'RoleController@getAllUsers');
+            Route::post('getUserPermissions', 'RoleController@getUserPermissions');
         });
 
         Route::group([

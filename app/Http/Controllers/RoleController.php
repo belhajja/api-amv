@@ -52,12 +52,12 @@ class RoleController extends Controller
 
         $user = User::find($request->user);
 
-        $role = Role::find($request->role);
+        $user->syncRoles([]);
 
-        $user->assignRole($role);
+        $user->assignRole($request->role);
 
         return response()->json([
-            'message' => 'succès ! Rôle assigné',
+            'message' => 'succès ! Rôle assigné'
         ]);
     }
 
@@ -95,7 +95,7 @@ class RoleController extends Controller
         $role->syncPermissions($permissions);
 
         return response()->json([
-            'message' => 'succès ! Permissions synchronisées',
+            'message' => 'succès ! Permissions synchronisées'
         ]);
     }
 
@@ -187,11 +187,14 @@ class RoleController extends Controller
 
     public function getAllUsers()
     {
-        return User::with('societes')->with('adherents')->with('permissions')->with('roles')->get();
+        return User::with('societes')->with('adherents')->with('roles')->with('permissions')->get();
     }
 
     public function getUserPermissions(Request $request)
     {
-        return auth()->user()->with('permissions')->with('roles')->get();
+
+        $user = User::find($request->user);
+
+        return $user->getPermissionsViaRoles();
     }
 }

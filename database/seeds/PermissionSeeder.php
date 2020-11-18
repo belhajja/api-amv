@@ -98,6 +98,8 @@ class PermissionSeeder extends Seeder
         $role->givePermissionTo("Access All");
         $role->givePermissionTo("manage Roles");
 
+        $user->assignRole($role);
+
         // Manager user creation 
         $user = new User();
         $user->name = "Manager";
@@ -105,7 +107,7 @@ class PermissionSeeder extends Seeder
         $user->password = bcrypt('password');
         $user->save();
 
-        $role = Role::create(['name' => 'Administrateur']);
+        $role = Role::create(['name' => 'Manager']);
 
         $role->givePermissionTo("Access Manager");
         $role->givePermissionTo("view Société");
@@ -127,7 +129,7 @@ class PermissionSeeder extends Seeder
         $user->password = bcrypt('password');
         $user->save();
 
-        $role = Role::create(['name' => 'Administrateur']);
+        $role = Role::create(['name' => 'User']);
 
         $role->givePermissionTo("Access User");
         $role->givePermissionTo("view Adhérent");

@@ -36,6 +36,7 @@ class DemandeController extends Controller
      */
     public function index()
     {
+
         $demandes = Demande::with('societe')->with('adherent')->with('dossier')->Filter()->get();
         //$adherents = Adherent::Filter()->get();
 
