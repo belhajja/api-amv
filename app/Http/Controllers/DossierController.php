@@ -50,7 +50,7 @@ class DossierController extends Controller
     {
         $request->validate([
             'adherent_id' => 'required',
-            'beneficiaire_id' => 'required',
+            'beneficiaire_id' => 'nullable',
             'numero' => 'required',
             'statut' => 'required',
             'etat_initiale' => 'required',
