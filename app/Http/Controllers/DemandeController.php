@@ -74,10 +74,7 @@ class DemandeController extends Controller
 
         $demande = Demande::create($request->all());
 
-        return response()->json([
-            'message' => 'succès ! Nouvelle Demande crée',
-            'contact' => $demande
-        ]);
+        return $demande;
     }
 
     public function show(Demande $demande)
