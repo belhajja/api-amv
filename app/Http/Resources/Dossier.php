@@ -25,6 +25,7 @@ class Dossier extends JsonResource
             'type'              => $this->type,
             'date_sort'         => $this->date_sort,
             'frais'             => $this->frais,
+            'montant'           => $this->montant,
             'mode_reglement'    => $this->mode_reglement,
             'reglement'         => $this->reglement,
             'pathologie'        => $this->pathologie,
