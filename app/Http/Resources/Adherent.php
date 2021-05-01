@@ -25,10 +25,10 @@ class Adherent extends JsonResource
             'couverture'    => $this->couverture,
             'etat'          => $this->etat,
             'date_adhesion' => $this->date_adhesion,
-            'societe'       => (new Societe($this->whenLoaded('societe'))),
-            'demandes'      => (new DemandeCollection($this->whenLoaded('demandes'))),
-            'beneficiaires' => (new BeneficiaireCollection($this->whenLoaded('beneficiaires'))),
-            'dossiers' => (new BeneficiaireCollection($this->whenLoaded('dossiers')))
+            //'societe'       => (new Societe($this->whenLoaded('societe'))),
+            //'demandes'      => (new DemandeCollection($this->whenLoaded('demandes'))),
+            //'beneficiaires' => (new BeneficiaireCollection($this->whenLoaded('beneficiaires'))),
+            //'dossiers' => (new BeneficiaireCollection($this->whenLoaded('dossiers')))
         ];
 
     }

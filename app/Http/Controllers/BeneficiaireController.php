@@ -37,7 +37,7 @@ class BeneficiaireController extends Controller
      */
     public function index()
     {
-        $beneficiaires = Beneficiaire::with('adherent')->with('dossiers')->Filter()->get();
+        $beneficiaires = Beneficiaire::Filter()->get();
 
         return (new BeneficiaireCollection($beneficiaires))
         ->response()

@@ -24,17 +24,20 @@ class Demande extends JsonResource
             'date_reponse'      => $this->date_reponse,
             'date_resolution'   => $this->date_resolution,
             'reponse'           => $this->reponse,
+            'societe_id'        => $this->societe_id,
+            'adherent_id'        => $this->adherent_id,
+            'dossier_id'        => $this->dossier_id,
         ];
 
-        if ($this->societe_id != null) {
-            $arrayData['societe'] = (new Societe($this->whenLoaded('societe')));
-        }
-        if ($this->adherent_id != null) {
-            $arrayData['adherent'] = (new Adherent($this->whenLoaded('adherent')));
-        }
-        if ($this->dossier_id != null) {
-            $arrayData['dossier'] = (new Dossier($this->whenLoaded('dossier')));
-        }
+        // if ($this->societe_id != null) {
+        //     $arrayData['societe'] = (new Societe($this->whenLoaded('societe')));
+        // }
+        // if ($this->adherent_id != null) {
+        //     $arrayData['adherent'] = (new Adherent($this->whenLoaded('adherent')));
+        // }
+        // if ($this->dossier_id != null) {
+        //     $arrayData['dossier'] = (new Dossier($this->whenLoaded('dossier')));
+        // }
 
         return $arrayData;
     }

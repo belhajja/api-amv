@@ -21,9 +21,9 @@ class Societe extends JsonResource
             'id'            => $this->id,
             'numero_police' => $this->numero_police,
             'nom'           => $this->nom,
-            'adresse'        => $this->adresse,
-            'adherents'     => (new AdherentCollection($this->whenLoaded('adherents'))),
-            'demandes'      => (new DemandeCollection($this->whenLoaded('demandes')))
+            'adresse'        => $this->adresse
+            //'adherents'     => (new AdherentCollection($this->whenLoaded('adherents'))),
+            //'demandes'      => (new DemandeCollection($this->whenLoaded('demandes')))
         ];
     }
 }

@@ -22,6 +22,7 @@ $factory->define(Dossier::class, function (Faker $faker) {
         'type' => $faker->randomElement(['Devis' , 'Medical' , 'PEC' , 'Optique']),
         'date_sort' => $faker->date(),
         'frais' => $faker->randomNumber(4,true),
+        'montant' => $faker->randomNumber(4,true),
         'reglement' => $faker->boolean,
         'mode_reglement' => $faker->randomElement(['Virement','Chèque','Espèce']),
         'pathologie' => $faker->sentence,

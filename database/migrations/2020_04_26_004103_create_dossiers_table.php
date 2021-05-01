@@ -25,6 +25,7 @@ class CreateDossiersTable extends Migration
             $table->string('type');
             $table->date('date_sort');
             $table->string('frais');
+            $table->string('montant');
             $table->string('mode_reglement');
             $table->string('reglement');
             $table->string('pathologie');

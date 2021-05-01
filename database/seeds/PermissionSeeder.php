@@ -116,6 +116,7 @@ class PermissionSeeder extends Seeder
         $role->givePermissionTo("view Demande Société");
         $role->givePermissionTo("view Demande Adhérent");
         $role->givePermissionTo("view Demande Dossier");
+        $role->givePermissionTo("view Demande");
         $role->givePermissionTo("view Dossier");
         $role->givePermissionTo("view Tracking Demande");
         $role->givePermissionTo("view Contact");
@@ -132,10 +133,12 @@ class PermissionSeeder extends Seeder
         $role = Role::create(['name' => 'User']);
 
         $role->givePermissionTo("Access User");
+        $role->givePermissionTo("view Société");
         $role->givePermissionTo("view Adhérent");
         $role->givePermissionTo("view Bénéficiaire");
         $role->givePermissionTo("view Demande Adhérent");
         $role->givePermissionTo("view Demande Dossier");
+        $role->givePermissionTo("view Demande");
         $role->givePermissionTo("view Dossier");
         $role->givePermissionTo("view Tracking Demande");
 

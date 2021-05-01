@@ -29,9 +29,8 @@ class Dossier extends JsonResource
             'reglement'         => $this->reglement,
             'pathologie'        => $this->pathologie,
             'observation'       => $this->observation,
-            'adherent'          => (new Adherent($this->whenLoaded('adherent'))),
-            'beneficiaire'      => (new Beneficiaire($this->whenLoaded('beneficiaire'))),
-            'demandes'      => (new Beneficiaire($this->whenLoaded('demandes')))
+            'adherent_id'       => $this->adherent_id,
+            'beneficiaire_id'   => $this->beneficiaire_id
         ];
     }
 }
