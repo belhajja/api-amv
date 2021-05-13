@@ -76,6 +76,9 @@ Route::group([
 
     Route::post('demande/societe', 'DemandeController@getDemandeBySociete');
 
+    Route::post('store-file', 'ApiDocumentController@store');
+    Route::get('download-file', 'ApiDocumentController@downloadFile');
+
 });
 
 
