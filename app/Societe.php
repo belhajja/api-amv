@@ -46,5 +46,12 @@ class Societe extends Model
             $query->whereIn('id', DB::table('societe_user')->where('user_id', $user->id)
                 ->pluck('societe_id'));
         }
+        if ($user->hasPermissionTo('Access User'))
+        {
+            $query->whereIn('id', DB::table('adherent_user')->where('user_id', $user->id)
+            ->join('adherents','adherents.id','=','adherent_user.adherent_id')
+            ->join('societes','adherents.societe_id','=','societes.id')
+            ->pluck('societes.id'));
+        }
     }
 }
