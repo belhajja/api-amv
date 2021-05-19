@@ -67,6 +67,7 @@ class DossierController extends Controller
 
         $dossier = Dossier::create($request->all());
 
+        return $dossier;
         return response()->json([
             'message' => 'succès ! Nouveau Dossier crée',
             'dossier' => $dossier
