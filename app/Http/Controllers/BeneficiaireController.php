@@ -98,8 +98,6 @@ class BeneficiaireController extends Controller
     {
         $beneficiaire->delete();
 
-        return response()->json([
-            'message' => 'Bénéficiaire supprimé avec succès!'
-        ]);
+        return HTTPReponse(204);
     }
 }

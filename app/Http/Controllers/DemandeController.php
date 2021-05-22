@@ -37,23 +37,12 @@ class DemandeController extends Controller
     public function index()
     {
 
+        //$demandes = Demande::Filter()->get();
         $demandes = Demande::with('societe')->with('adherent')->with('dossier')->Filter()->get();
-        //$adherents = Adherent::Filter()->get();
 
-        //return $demandes;
         return (new DemandeCollection($demandes))
             ->response()
             ->setStatusCode(200);
-    }
-
-    public function getDemandeBySociete(Request $request)
-    {
-        $societe = $request->societe;
-
-        $demandes = Demande::Societe()->where('societe_id','=',$societe)->get();
-
-        return $demandes;
-        //$adherent = Adherent::Filter()->find($adherent)->first();
     }
 
     public function store(Request $request)
@@ -75,12 +64,15 @@ class DemandeController extends Controller
         $demande = Demande::create($request->all());
 
         return $demande;
+        return (new RessourceDemande($beneficiaire))
+        ->response()
+        ->setStatusCode(200);
     }
 
     public function show(Demande $demande)
     {
-        $demande = Demande::with('societe')->with('adherent')->with('dossier')->Filter()->find($demande)->first();
-        //$adherent = Adherent::Filter()->find($adherent)->first();
+        $demande = Demande::Filter()->find($demande)->first();
+        //$demande = Demande::with('societe')->with('adherent')->with('dossier')->Filter()->find($demande)->first();
 
         if ($demande) {
             return (new ResourcesDemande($demande))

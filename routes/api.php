@@ -74,8 +74,7 @@ Route::group([
     Route::resource('contact', 'ContactController');
     Route::resource('trackingdemande', 'TrackingDemandeController');
 
-    Route::post('demande/societe', 'DemandeController@getDemandeBySociete');
-
+    //File Management
     Route::post('store-file', 'ApiDocumentController@store');
     Route::get('download-file', 'ApiDocumentController@downloadFile');
 
