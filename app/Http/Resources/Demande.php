@@ -27,6 +27,7 @@ class Demande extends JsonResource
             'societe_id'        => $this->societe_id,
             'adherent_id'        => $this->adherent_id,
             'dossier_id'        => $this->dossier_id,
+            'documents'         => (new DocumentCollection($this->documents)),
         ];
 
         // if ($this->societe_id != null) {

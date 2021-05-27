@@ -75,8 +75,13 @@ Route::group([
     Route::resource('trackingdemande', 'TrackingDemandeController');
 
     //File Management
-    Route::post('store-file', 'ApiDocumentController@store');
-    Route::get('download-file', 'ApiDocumentController@downloadFile');
+    Route::group([
+        'prefix' => 'files'
+    ], function () {
+        Route::post('upload', 'DocumentController@store');
+        Route::get('download/{file}', 'DocumentController@show');
+    });
+    
 
 });
 

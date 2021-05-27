@@ -38,7 +38,7 @@ class DemandeController extends Controller
     {
 
         //$demandes = Demande::Filter()->get();
-        $demandes = Demande::with('societe')->with('adherent')->with('dossier')->Filter()->get();
+        $demandes = Demande::with('documents')->Filter()->get();
 
         return (new DemandeCollection($demandes))
             ->response()
@@ -63,7 +63,6 @@ class DemandeController extends Controller
 
         $demande = Demande::create($request->all());
 
-        return $demande;
         return (new RessourceDemande($beneficiaire))
         ->response()
         ->setStatusCode(200);
@@ -72,7 +71,6 @@ class DemandeController extends Controller
     public function show(Demande $demande)
     {
         $demande = Demande::Filter()->find($demande)->first();
-        //$demande = Demande::with('societe')->with('adherent')->with('dossier')->Filter()->find($demande)->first();
 
         if ($demande) {
             return (new ResourcesDemande($demande))
@@ -101,18 +99,15 @@ class DemandeController extends Controller
 
         $demande->update($request->all());
 
-        return response()->json([
-            'message' => 'Succès ! Demande mise à jour',
-            'demande' => $demande
-        ]);
+        return (new ResourcesDemande($demande))
+                ->response()
+                ->setStatusCode(200);
     }
 
     public function destroy(Demande $demande)
     {
         $demande->delete();
 
-        return response()->json([
-            'message' => 'Demande supprimée avec succès!'
-        ]);
+        return HTTPReponse(204);
     }
 }

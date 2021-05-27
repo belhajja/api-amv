@@ -26,6 +26,11 @@ class Dossier extends Model
         return $this->hasMany(Demande::class);
     }
 
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
+
     public function scopeFilter($query)
     {
         $user = auth()->user();

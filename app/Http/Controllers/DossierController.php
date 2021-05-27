@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Dossier;
 use App\Http\Resources\DossierCollection;
+use App\Http\Resources\Dossier as ResourcesDossier;
 use Illuminate\Http\Request;
 
 class DossierController extends Controller
@@ -38,7 +39,7 @@ class DossierController extends Controller
     public function index()
     {
 
-        $dossiers = Dossier::with('adherent')->with('beneficiaire')->with('demandes')->Filter()->get();
+        $dossiers = Dossier::with('documents')->Filter()->get();
 
         return (new DossierCollection($dossiers))
             ->response()
@@ -67,15 +68,16 @@ class DossierController extends Controller
 
         $dossier = Dossier::create($request->all());
 
-        return response()->json([
-            'message' => 'succès ! Nouveau Dossier crée',
-            'dossier' => $dossier
-        ]);
+        return (new ResourcesDossier($dossier))
+            ->response()
+            ->setStatusCode(200);
     }
 
     public function show(Dossier $dossier)
     {
-        return $dossier;
+        return (new ResourcesDossier($dossier))
+            ->response()
+            ->setStatusCode(200);
     }
 
     public function update(Request $request, Dossier $dossier)
@@ -99,18 +101,15 @@ class DossierController extends Controller
 
         $dossier->update($request->all());
 
-        return response()->json([
-            'message' => 'Succès ! Dossier mis à jour',
-            'dossier' => $dossier
-        ]);
+        return (new ResourcesDossier($dossier))
+            ->response()
+            ->setStatusCode(200);
     }
 
     public function destroy(Dossier $dossier)
     {
         $dossier->delete();
 
-        return response()->json([
-            'message' => 'Dossier supprimé avec succès!'
-        ]);
+        return HTTPReponse(204);
     }
 }

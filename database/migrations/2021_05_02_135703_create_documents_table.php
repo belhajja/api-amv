@@ -14,9 +14,14 @@ class CreateDocumentsTable extends Migration
     public function up()
     {
         Schema::create('documents', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title');
-            $table->integer('user_id');
+            $table->id();
+            $table->string('name');
+            $table->string('path');
+            $table->integer('size');
+            $table->unsignedBigInteger('dossier_id')->nullable();
+            $table->unsignedBigInteger('demande_id')->nullable();
+            $table->foreign('dossier_id')->references('id')->on('dossiers')->onDelete('cascade');
+            $table->foreign('demande_id')->references('id')->on('demandes')->onDelete('cascade');
             $table->timestamps();
         });
     }

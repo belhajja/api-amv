@@ -31,7 +31,8 @@ class Dossier extends JsonResource
             'pathologie'        => $this->pathologie,
             'observation'       => $this->observation,
             'adherent_id'       => $this->adherent_id,
-            'beneficiaire_id'   => $this->beneficiaire_id
+            'beneficiaire_id'   => $this->beneficiaire_id,
+            'documents'         => (new DocumentCollection($this->documents)),
         ];
     }
 }
