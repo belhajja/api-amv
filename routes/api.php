@@ -80,6 +80,7 @@ Route::group([
     ], function () {
         Route::post('upload', 'DocumentController@store');
         Route::get('download/{file}', 'DocumentController@show');
+        Route::post('delete', 'DocumentController@destroy');
     });
     
 

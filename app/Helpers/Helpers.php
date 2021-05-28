@@ -4,6 +4,8 @@
 function HTTPReponse($HTTP_CODE)
 {
     switch ($HTTP_CODE){
+        case '304':
+            return response()->json(['error' => 'Element Already exists'],$HTTP_CODE);
         case '401':
             return response()->json(['error' => 'Authentification needed to perform this action'],$HTTP_CODE);
         case '403':

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Document;
-use Illuminate\Http\Request;
 use App\Http\Resources\Document as ResourcesDocument;
-use Validator,Redirect,Response,File, Storage;
+use File;
+use Illuminate\Http\Request;
+use Response;
+use Storage;
+use Validator;
 
 class DocumentController extends Controller
 {
@@ -37,36 +40,35 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), 
-              [ 
-              'file' => 'required|mimes:doc,docx,pdf,txt',
-             ]);   
- 
-        if ($validator->fails()) {          
-                return response()->json(['error'=>$validator->errors()], 500);                        
-            }  
-    
-    
-            if ($files = $request->file('file')) {
-                
-                //store file into document folder
-                $file = $request->file->store('public/documents');
-    
-                //store your file into database
-                $document = new Document();
-                $document->name = $files->getClientOriginalName();
-                $document->path = basename($file);
-                $document->size = $files->getSize();
-                $document->dossier_id = $request->dossier;
-                $document->demande_id = $request->demande;
+        $validator = Validator::make($request->all(),
+            [
+                'file' => 'required|mimes:doc,docx,pdf,txt',
+            ]);
 
-                $document->save();
-                
-                return (new ResourcesDocument($document))
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 500);
+        }
+
+        if ($files = $request->file('file')) {
+
+            //store file into document folder
+            $file = $request->file->store('public/documents');
+
+            //store your file into database
+            $document = new Document();
+            $document->name = $files->getClientOriginalName();
+            $document->path = basename($file);
+            $document->size = $files->getSize();
+            $document->dossier_id = $request->dossier;
+            $document->demande_id = $request->demande;
+
+            $document->save();
+
+            return (new ResourcesDocument($document))
                 ->response()
                 ->setStatusCode(200);
-    
-            }
+
+        }
     }
 
     /**
@@ -77,8 +79,8 @@ class DocumentController extends Controller
      */
     public function show(String $file)
     {
-        
-        $filename= "public/documents/".$file; 
+
+        $filename = "public/documents/" . $file;
 
         return Storage::download($filename);
     }
@@ -112,8 +114,21 @@ class DocumentController extends Controller
      * @param  \App\Document  $document
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Document $document)
+    public function destroy(Request $request)
     {
-        //
+
+        $document = Document::find($request->id)->first();
+
+        $filename = "public/documents/" . $request->path;
+
+        //return Storage::exists($filename);
+        if (Storage::exists($filename)) {
+            Storage::delete($filename);
+            $document->delete();
+        } else {
+            return HTTPReponse(404);
+        }
+
+        return HTTPReponse(204);
     }
 }

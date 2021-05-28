@@ -18,9 +18,10 @@ class RoleController extends Controller
             $role = Role::findByName($request->name);
         } catch (Exception $e) {
             $role = Role::create(['name' => $request->name]);
+            return $role;
         }
 
-        return $role;
+        return HTTPReponse(304);
     }
 
     public function deletRole(Request $request)
