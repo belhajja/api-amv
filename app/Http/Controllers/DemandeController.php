@@ -63,7 +63,7 @@ class DemandeController extends Controller
 
         $demande = Demande::create($request->all());
 
-        return (new RessourceDemande($beneficiaire))
+        return (new ResourcesDemande($demande))
         ->response()
         ->setStatusCode(200);
     }
