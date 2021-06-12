@@ -37,8 +37,7 @@ class DemandeController extends Controller
     public function index()
     {
 
-        //$demandes = Demande::Filter()->get();
-        $demandes = Demande::with('documents')->Filter()->get();
+        $demandes = Demande::Filter()->get();
 
         return (new DemandeCollection($demandes))
             ->response()
@@ -106,8 +105,12 @@ class DemandeController extends Controller
 
     public function destroy(Demande $demande)
     {
-        $demande->delete();
+         if (Demande::Filter()->find($demande)->first()) {
+            $demande->delete();
 
-        return HTTPReponse(204);
+            return HTTPReponse(204);
+        }
+
+        return HTTPReponse(403);
     }
 }

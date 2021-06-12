@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\TrackingDemande;
+use App\TrackingDossier;
 use Faker\Generator as Faker;
 
-$factory->define(TrackingDemande::class, function (Faker $faker) {
+$factory->define(TrackingDossier::class, function (Faker $faker) {
     
     $dossier = \App\Dossier::all()->pluck('id')->toArray();
 

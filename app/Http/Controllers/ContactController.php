@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
+use App\Http\Resources\ContactCollection;
+use App\Http\Resources\Contact As ResourcesContact;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -37,10 +39,11 @@ class ContactController extends Controller
     public function index()
     {
 
-        return Contact::Filter()->get();
-        $contacts = Contact::all();
+        $contacts = Contact::Filter()->get();
 
-        return response()->json($contacts);
+        return (new ResourcesContact($contacts))
+        ->response()
+        ->setStatusCode(200);
     }
 
     public function store(Request $request)
@@ -55,15 +58,22 @@ class ContactController extends Controller
 
         $contact = Contact::create($request->all());
 
-        return response()->json([
-            'message' => 'succès ! Nouveau Contact crée',
-            'contact' => $contact
-        ]);
+        return (new ResourcesContact($contact))
+        ->response()
+        ->setStatusCode(200);
     }
 
     public function show(Contact $contact)
     {
-        return $contact;
+        $contact = Contact::Filter()->find($contact)->first();
+
+        if ($contact) {
+            return (new ResourcesContact($contact))
+            ->response()
+            ->setStatusCode(200);
+        }
+
+        return HTTPReponse(403);
     }
 
     public function update(Request $request, Contact $contact)
@@ -78,19 +88,20 @@ class ContactController extends Controller
 
         $contact->update($request->all());
 
-        return response()->json([
-            'message' => 'Succès ! Contact mis à jour',
-            'contact' => $contact
-        ]);
+        return (new ResourcesContact($contact))
+        ->response()
+        ->setStatusCode(200);
     }
 
     public function destroy(Contact $contact)
     {
-        $contact->delete();
+        if (Contact::Filter()->find($contact)->first()) {
+            $contact->delete();
 
-        return response()->json([
-            'message' => 'Contact supprimé avec succès!'
-        ]);
+            return HTTPReponse(204);
+        }
+
+        return HTTPReponse(403);
     }
 
 }

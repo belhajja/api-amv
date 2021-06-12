@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ContactSeeder::class);
         $this->call(DossierSeeder::class);
         $this->call(DemandeSeeder::class);
-        $this->call(TrackingDemandeSeeder::class);
+        $this->call(TrackingDossierSeeder::class);
         $this->call(PermissionSeeder::class);
         $this->call(DocumentSeeder::class);
     }

@@ -96,8 +96,12 @@ class BeneficiaireController extends Controller
 
     public function destroy(Beneficiaire $beneficiaire)
     {
-        $beneficiaire->delete();
+        if (Beneficiaire::Filter()->find($beneficiaire)->first()) {
+            $beneficiaire->delete();
 
-        return HTTPReponse(204);
+            return HTTPReponse(204);
+        }
+
+        return HTTPReponse(403);
     }
 }

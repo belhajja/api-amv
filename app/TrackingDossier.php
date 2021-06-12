@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class TrackingDemande extends Model
+class TrackingDossier extends Model
 {
     protected $guarded = [];
 

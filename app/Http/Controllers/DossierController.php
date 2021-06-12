@@ -39,7 +39,7 @@ class DossierController extends Controller
     public function index()
     {
 
-        $dossiers = Dossier::with('documents')->Filter()->get();
+        $dossiers = Dossier::Filter()->get();
 
         return (new DossierCollection($dossiers))
             ->response()
@@ -75,9 +75,16 @@ class DossierController extends Controller
 
     public function show(Dossier $dossier)
     {
-        return (new ResourcesDossier($dossier))
+        $dossier = Dossier::Filter()->find($dossier)->first();
+
+        if ($dossier) {
+            return (new ResourcesDossier($dossier))
             ->response()
             ->setStatusCode(200);
+        }
+
+        return HTTPReponse(403);
+        
     }
 
     public function update(Request $request, Dossier $dossier)
@@ -108,8 +115,12 @@ class DossierController extends Controller
 
     public function destroy(Dossier $dossier)
     {
-        $dossier->delete();
+        if (Dossier::Filter()->find($dossier)->first()) {
+            $dossier->delete();
 
-        return HTTPReponse(204);
+            return HTTPReponse(204);
+        }
+
+        return HTTPReponse(403);
     }
 }

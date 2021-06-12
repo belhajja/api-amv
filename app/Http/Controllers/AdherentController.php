@@ -37,7 +37,6 @@ class AdherentController extends Controller
      */
     public function index()
     {
-        //$adherents = Adherent::with('societe')->with('beneficiaires')->with('dossiers')->with('demandes')->Filter()->get();
         $adherents = Adherent::Filter()->get();
 
         return (new AdherentCollection($adherents))
@@ -69,7 +68,6 @@ class AdherentController extends Controller
     public function show(Adherent $adherent)
     {
 
-        //$adherent = Adherent::with('societe')->with('beneficiaires')->Filter()->find($adherent)->first();
         $adherent = Adherent::Filter()->find($adherent)->first();
 
         if ($adherent) {

@@ -38,8 +38,7 @@ class SocieteController extends Controller
      */
     public function index()
     {
-        $societes = Societe::with('adherents')->with('demandes')->Filter()->get();
-        //$societes = Societe::Filter()->get();
+        $societes = Societe::Filter()->get();
 
         return (new SocieteCollection($societes))
         ->response()
@@ -63,7 +62,7 @@ class SocieteController extends Controller
 
     public function show(Societe $societe)
     {
-        $societe = Societe::with('adherents')->Filter()->find($societe)->first();
+        $societe = Societe::Filter()->find($societe)->first();
 
         if ($societe){
             return (new ResourcesSociete($societe))

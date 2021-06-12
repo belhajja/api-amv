@@ -72,7 +72,7 @@ Route::group([
     Route::resource('demande', 'DemandeController');
     Route::resource('beneficiaire', 'BeneficiaireController');
     Route::resource('contact', 'ContactController');
-    Route::resource('trackingdemande', 'TrackingDemandeController');
+    Route::resource('trackingdossier', 'TrackingDossierController');
 
     //File Management
     Route::group([

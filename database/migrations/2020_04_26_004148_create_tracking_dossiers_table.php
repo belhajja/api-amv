@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTrackingDemandesTable extends Migration
+class CreateTrackingDossiersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTrackingDemandesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tracking_demandes', function (Blueprint $table) {
+        Schema::create('tracking_dossiers', function (Blueprint $table) {
             $table->id();
             $table->string('type_sort');
             $table->date('date_sort');
@@ -35,6 +35,6 @@ class CreateTrackingDemandesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tracking_demandes');
+        Schema::dropIfExists('tracking_dossiers');
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-use App\TrackingDemande;
+use App\TrackingDossier;
 use Illuminate\Database\Seeder;
 
-class TrackingDemandeSeeder extends Seeder
+class TrackingDossierSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,6 @@ class TrackingDemandeSeeder extends Seeder
      */
     public function run()
     {
-        factory(TrackingDemande::class, 500)->create();
+        factory(TrackingDossier::class, 500)->create();
     }
 }
