@@ -15,6 +15,7 @@ $factory->define(Beneficiaire::class, function (Faker $faker) {
         'relation' => $faker->randomElement(['Conjoint' , 'Enfant']),
         'couverture' => $faker ->randomElement(['Base' , 'Complémentaire']),
         'etat' => $faker->randomElement(['En Cours' , 'Sortant']),
+        'date_naissance' => $faker->date,
         'adherent_id' => $faker->randomElement($adherent)
     ];
 });

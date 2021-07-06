@@ -12,6 +12,8 @@ $factory->define(Adherent::class, function (Faker $faker) {
     return [
         'nom' => $faker->lastName,
         'prenom' => $faker->firstName,
+        'date_naissance' => $faker->date,
+        'fonction' => $faker->jobTitle,
         'matricule' => $faker->randomNumber(8),
         'rib' => $faker->randomNumber(9),
         'situation' => $faker->randomElement(['Célibataire', 'Marié', 'Divorcé' , 'Veuf']),
