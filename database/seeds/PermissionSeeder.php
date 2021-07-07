@@ -70,7 +70,13 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'create Tracking Demande']);
         Permission::create(['name' => 'edit Tracking Demande']);
         Permission::create(['name' => 'delete Tracking Demande']);
-        Permission::create(['name' => 'view Tracking Demande']);    
+        Permission::create(['name' => 'view Tracking Demande']);  
+        
+        //Tracking Demande
+        Permission::create(['name' => 'create Tracking Dossier']);
+        Permission::create(['name' => 'edit Tracking Dossier']);
+        Permission::create(['name' => 'delete Tracking Dossier']);
+        Permission::create(['name' => 'view Tracking Dossier']); 
         
         //Contact
         Permission::create(['name' => 'create Contact']);
