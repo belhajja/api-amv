@@ -125,6 +125,7 @@ class PermissionSeeder extends Seeder
         $role->givePermissionTo("view Demande");
         $role->givePermissionTo("view Dossier");
         $role->givePermissionTo("view Tracking Demande");
+        $role->givePermissionTo("view Tracking Dossier");
         $role->givePermissionTo("view Contact");
 
         $user->assignRole($role);
@@ -147,6 +148,7 @@ class PermissionSeeder extends Seeder
         $role->givePermissionTo("view Demande");
         $role->givePermissionTo("view Dossier");
         $role->givePermissionTo("view Tracking Demande");
+        $role->givePermissionTo("view Tracking Dossier");
 
         $user->assignRole($role);
     }
